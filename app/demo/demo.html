@@ -1,16 +1,84 @@
-<div>
-<label>Nom</label><input type="text" ng-model="person.nom">
-<label>Prenom</label><input type="text" ng-model="person.prenom">
-<label>Age</label><input type="number" min="1" ng-model="person.age">
+<div class="container-fluid">
+    <label>Nom</label><input type="text" ng-model="person.nom">
+    <label>Prenom</label><input type="text" ng-model="person.prenom">
+    <label>Age</label><input type="number" min="1" ng-model="person.age">
 
-<pre>{{person | json}} </pre>
-<p>{{result}} </p>
-<annee value="person.age"> </annee>
-<table>
-    <thead>
-    <tr> </tr>
-    </thead>
-</table>
+    <pre>{{person | json}} </pre>
+    <p>{{result}} </p>
+    <annee value="person.age"> </annee>
+
+
+    <select ng-options="book.text for book in books track by book.id" ng-model="selectedBok">
+    
+</select>
+    <pre>{{selectedBok|json}}</pre>
+    <div class="container-fluid">
+        <div class="col-lg-6">
+            <form name="demoForm" ng-submit="redirect()" novalidate>
+
+                <div class="form-group">
+                    <label for="titre">Titre:</label>
+                    <input type="text" class="form-control" id="titre" ng-model="title" name="title" ng-minlength="3" required>
+                    <ul>
+
+                        <div ng-if="demoForm.title.$touched">
+
+                            <ng-messages for="demoForm.title.$error">
+                                <ng-message when="required">
+                                    <li>Le titre est requis</li>
+                                </ng-message>
+                                <ng-message when="minlength">
+                                    <li>Le titre 3 characters</li>
+                                </ng-message>
+                            </ng-messages>
+
+
+
+                        </div>
+
+
+
+                    </ul>
+                </div>
+                <div class="form-group">
+                    <label for="titre">Author:</label>
+                    <input type="text" class="form-control" id="author" ng-model="author" name="author" required>
+                </div>
+                <button type="submit" class="btn btn-primary" ng-disabled="demoForm.$invalid">Submit</button>
+            </form>
+        </div>
+        <div class="col-lg-6">
+            <pre>
+            {{demoForm|json}}
+            </pre>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="container">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th ng-repeat="(x,y) in datas[0]" class="active">
+                        {{x| uppercase}}
+
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="data in datas">
+                    <td ng-repeat="(x,y) in data"> {{y}} </td>
+
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
 
 
 
