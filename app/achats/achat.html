@@ -1,0 +1,26 @@
+<div class="container">
+    <table class="table table-bordered table-hover" ng-if="achats.length>0">
+        <thead>
+            <tr class="active">
+                <td>QUANTITE</td>
+                <td>TITRE</td>
+                
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="achat in achats track by $index">
+
+                <td> {{achat.qte}} </td>
+                <td> {{achat.name.title}} </td>
+              
+        
+
+
+
+            </tr>
+        </tbody>
+
+    </table>
+    
+</div>

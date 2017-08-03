@@ -8,9 +8,13 @@ angular.module('myApp', [
   'myApp.view1',
   'myApp.view2',
   'myApp.demo',
+  'myApp.magasin',
+  'myApp.achats',
   'myApp.version'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
+
+  
   $locationProvider.hashPrefix('!');
   $routeProvider.when('/view1', {
     templateUrl: 'view1/view1.html',
@@ -23,5 +27,18 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
   controller:'DemoCtrl'
  
 
-  }).otherwise({redirectTo: '/view1'});
-}]);
+  }).when('/magasin',{
+    templateUrl:'magasin/magasin.html',
+    controller:'MagasinCtrl'
+
+  }).when('/achat',{
+     templateUrl:'achats/achat.html',
+    controller:'AchatCtrl'
+  }
+
+
+  ).otherwise({redirectTo: '/view1'});
+}]).run(['$rootScope',function($rootScope) {
+    $rootScope.qteCommande = 0;
+    $rootScope.achats = [];
+}]);;

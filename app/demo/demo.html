@@ -11,7 +11,7 @@
     <select ng-options="book.text for book in books track by book.id" ng-model="selectedBok">
     
 </select>
-    <pre>{{selectedBok|json}}</pre>
+    <pre>{{selectedBook|json}}</pre>
     <div class="container-fluid">
         <div class="col-lg-6">
             <form name="demoForm" ng-submit="redirect()" novalidate>
