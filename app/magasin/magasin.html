@@ -1,4 +1,8 @@
-<h1 ng-if="res">Votre commande contient {{quantite}} </h1>
+<div class="container ">
+    <h1 ng-if="res" class="text-center">Votre commande contient {{quantite}} article(s)</h1>
+</div>
+
+
 <div class="container">
     <form class="form-horizontal magasinForm" name="magasinForm" ng-submit="ajouter()" novalidate>
         <div class="form-group">
@@ -15,12 +19,15 @@
 
             </div>
 
+
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-primary" ng-disabled="magasinForm.$invalid">Ajouter au Panier</button>
+                <button type="submit" class="btn btn-outline-success" ng-disabled="magasinForm.$invalid || qte<1">Ajouter au Panier</button>
             </div>
         </div>
+
+        
 
 
 
@@ -34,19 +41,22 @@
     {{albumsTableau|json}}
 </pre>-->
 <div class="container">
-    <table class="table table-bordered table-hover" ng-if="albumsTableau.length>0">
-        <thead>
-            <tr class="active">
-                <td>QUANTITE</td>
-                <td>TITRE</td>
-                <td>ACTIONS</td>
-                <td>
-                    <input type="checkbox" name="" ng-click="checkAll(checkedAll)" ng-model="checkedAll" value=" ">Check All</td>
+    <table class="table" ng-if="albumsTableau.length>0">
+        <thead class="thead-inverse">
+            <tr>
+                <th><label for="">QUANTITE</label></th>
+                <th><label for="">TITRE</label></th>
+                <th><label for="">ACTION</label></th>
+                <th class="form-group">
+                    <input type="checkbox" class="form-check-input col-2" name="checkB" ng-click="checkAll(checkedAll)" ng-model="checkedAll" > 
+                    <label class="col-10">CheckAll</label>
+                    
 
+                </th>
             </tr>
         </thead>
         <tbody>
-            {{albumsTableau}}
+            <!-- {{albumsTableau}} -->
             <tr ng-repeat="album in albumsTableau">
 
                 <td> {{album.qte}} </td>
@@ -62,13 +72,28 @@
         </tbody>
 
     </table>
-    <form name="achat" ng-submit="acheter()">
-        <button type="submit" class="btn btn-primary" ng-if="albumsTableau.length>0" name="bouton">J'achete</button>
-    </form>
+    <!-- <pre ng-repeat="album in albumsTableau" >
+    {{album|json}}
+    </pre> -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <button type="submit" ng-click="acheter()" class="btn btn-primary col-8" ng-if="albumsTableau.length>0" name="bouton">J'achete</button>
+               
+               
+            </div>
+            <div class="col-4">
+                 <button type="submit" ng-click="deleteChecked()" class="btn btn-outline-danger col-8" ng-if="albumsTableau.length>0 && oneChecked "
+                    name="bouton">Delete</button>
+            </div>
+        </div>
+
+
+
+    </div>
+
 </div>
-<form name="delete" ng-submit="supprimer()">
-    <button type="submit" class="btn btn-primary" ng-if="albumsTableau.length>0 " name="bouton">Delete</button>
-</form>
+
 
 
 

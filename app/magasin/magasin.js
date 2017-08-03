@@ -8,6 +8,7 @@ angular.module('myApp.magasin', [])
         $scope.albums = {};
         $scope.qte = 1;
         $scope.res = false;
+        $scope.oneChecked = false;
 
 
         $scope.quantite = 0;
@@ -16,33 +17,61 @@ angular.module('myApp.magasin', [])
 
 
 
-        console.log($location.path());
-        console.log($location.search());
+        // console.log($location.path());
+        //console.log($location.search());
 
-        $scope.checkAll = function(checkAll){
+        $scope.checkAll = function (checkAll) {
 
             if (checkAll) {
                 angular.forEach($scope.albumsTableau, function (value, key) {
-                   $scope.albumsTableau[key].check=true;
+                    $scope.albumsTableau[key].check = true;
                 });
-            }else{
-                 angular.forEach($scope.albumsTableau, function (value, key) {
-                   $scope.albumsTableau[key].check=false;
+            } else {
+                angular.forEach($scope.albumsTableau, function (value, key) {
+                    $scope.albumsTableau[key].check = false;
                 });
             }
 
 
         }
-
-        $scope.ajouter = function () {
-
+        ajouterAlbum = function () {
             $scope.albumsTableau.push({
                 qte: $scope.qte,
-                name: $scope.selectedAlbum
+                name: $scope.selectedAlbum,
+                check: false
 
 
             });
-            console.log($scope.albumsTableau);
+        }
+
+
+
+
+        $scope.ajouter = function () {
+            var exist = false;
+            if ($scope.albumsTableau.length) {
+                angular.forEach($scope.albumsTableau, function (value, key) {
+
+                    if (exist == false) {
+                        if (value.name.title == $scope.selectedAlbum.title) {
+                            $scope.albumsTableau[key].qte += $scope.qte;
+                            exist = true;
+                        }
+
+                    }
+
+                });
+                if (exist == false) {
+                    ajouterAlbum();
+                }
+
+            } else {
+                ajouterAlbum();
+            }
+
+
+            // console.log($scope.selectedAlbum.title);
+
             $scope.qte = 1;
             $scope.selectedAlbum = "";
 
@@ -51,6 +80,14 @@ angular.module('myApp.magasin', [])
         $scope.supprimer = function (pos) {
             $scope.albumsTableau.splice(pos, 1);
         }
+        $scope.deleteChecked = function () {
+            function checked(element) {
+                return element.check == false;
+            }
+
+            $scope.albumsTableau = $scope.albumsTableau.filter(checked);
+
+        };
         $scope.acheter = function () {
             angular.forEach($scope.albumsTableau, function (value, key) {
                 $scope.quantite += $scope.albumsTableau[key].qte;
@@ -72,7 +109,7 @@ angular.module('myApp.magasin', [])
             $scope.res = true;
 
             $rootScope.qteCommande += $scope.quantite;
-            console.log($scope.qteCommande);
+            // console.log($scope.qteCommande);
 
 
             $timeout(function () {
@@ -99,7 +136,7 @@ angular.module('myApp.magasin', [])
             console.log(p);
         });*/
         $scope.albums = MagasinService.getPostsViaRessource();
-        console.log($scope.albums);
+        //console.log($scope.albums);
         var defer = $q.defer();
         defer.promise.then(function (val) {
             console.log(val);
@@ -114,9 +151,21 @@ angular.module('myApp.magasin', [])
 
 
 
-        $scope.$watch('person', function () {
+        $scope.$watch('albumsTableau', function () {
+            var isChecked = false;
+            angular.forEach($scope.albumsTableau, function (value, key) {
+                if (isChecked == false) {
+                    if ($scope.albumsTableau[key].check) {
 
-            //  $scope.result = MagasinService.compute($scope.person);
+                        $scope.oneChecked = true;
+                        isChecked=true;
+                    } else{
+                        $scope.oneChecked=false;
+                        isChecked=false;
+                    }
+                }
+
+            })
 
         }, true);
 

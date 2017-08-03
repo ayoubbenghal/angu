@@ -13,11 +13,11 @@ angular.module('myApp.magasin')
 
             },*/
             logConfig: function () {
-                console.log(config.apiUrl);
+               // console.log(config.apiUrl);
             },
             getPosts: function () {
                var promise= $http.get(config.apiUrl);
-               console.log(promise);
+              // console.log(promise);
               return promise;
             },
             getPostsViaRessource :function(){
